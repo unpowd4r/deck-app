@@ -1,7 +1,7 @@
-import { DeckItems } from '../DecksList'
+import { DeckItems } from '../../decks-api'
 import s from './DeckItem.module.css'
 
-type DeckProps = {
+export type DeckProps = {
   deck: DeckItems // todo: fix
 }
 
