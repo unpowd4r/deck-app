@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux'
 import { decksApi } from './decks-api'
 import { addDeckAC, setDecksAC } from './decks-reducer'
+import { useAppDispatch } from '../../app/store'
 
 export const fetchDecksThunk = (dispatch: Dispatch) => {
   decksApi.getDecks().then((res) => {

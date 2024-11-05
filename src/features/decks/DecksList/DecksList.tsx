@@ -10,7 +10,7 @@ export const DecksList = () => {
 
   useEffect(() => {
     dispatch(fetchDecksThunk)
-  }, [])
+  }, [decks])
 
   return (
     <ul className={s.list}>

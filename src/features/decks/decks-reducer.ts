@@ -18,6 +18,10 @@ export const decksReducer = (state: DecksState = initialState, action: DecksActi
       }
 
     case 'ADD-DECK':
+      console.log({
+        ...state,
+        decks: [...state.decks, action.deck],
+      })
       return {
         ...state,
         decks: [...state.decks, action.deck],
