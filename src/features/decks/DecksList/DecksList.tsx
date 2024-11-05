@@ -1,16 +1,9 @@
-import { useEffect } from 'react'
-import { fetchDecksThunk } from '../decks-thunks'
-import { useAppDispatch, useAppSelector } from './../../../app/store'
-import { DeckItem } from './DeckItem/DeckItem'
 import s from './DecksList.module.css'
+import { DeckItem } from './DeckItem/DeckItem.tsx'
+import { useFetchDecks } from './useFetchDecks.ts'
 
 export const DecksList = () => {
-  const dispatch = useAppDispatch()
-  const decks = useAppSelector((state) => state.decksReducer.decks)
-
-  useEffect(() => {
-    dispatch(fetchDecksThunk)
-  }, [decks])
+  const { decks } = useFetchDecks()
 
   return (
     <ul className={s.list}>

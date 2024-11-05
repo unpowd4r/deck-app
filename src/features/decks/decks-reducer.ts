@@ -1,7 +1,7 @@
-import { DeckItems } from './decks-api'
+import { Deck } from './decks-api.ts'
 
 const initialState = {
-  decks: [] as DeckItems[],
+  decks: [] as Deck[],
   searchParams: {
     name: '',
   },
@@ -11,36 +11,52 @@ type DecksState = typeof initialState
 
 export const decksReducer = (state: DecksState = initialState, action: DecksActions): DecksState => {
   switch (action.type) {
-    case 'SET-DECKS':
+    case 'DECKS/SET-DECKS':
       return {
         ...state,
         decks: action.decks,
       }
-
-    case 'ADD-DECK':
-      console.log({
-        ...state,
-        decks: [...state.decks, action.deck],
-      })
+    case 'DECKS/ADD-DECK':
       return {
         ...state,
-        decks: [...state.decks, action.deck],
+        decks: [action.deck, ...state.decks],
       }
-
+    case 'DECKS/DELETE-DECK':
+      return {
+        ...state,
+        decks: state.decks.filter((deck) => deck.id !== action.id),
+      }
+    case 'DECKS/UPDATE-DECK':
+      return {
+        ...state,
+        decks: state.decks.map((deck) => (deck.id === action.updatedDeck.id ? action.updatedDeck : deck)),
+      }
     default:
       return state
   }
 }
 
-export type SetDecksActionType = ReturnType<typeof setDecksAC>
-export type AddDecksActionType = ReturnType<typeof addDeckAC>
+type DecksActions =
+  | ReturnType<typeof setDecksAC>
+  | ReturnType<typeof addDeckAC>
+  | ReturnType<typeof deleteDeckAC>
+  | ReturnType<typeof updateDeckAC>
 
-type DecksActions = SetDecksActionType | AddDecksActionType
+export const setDecksAC = (decks: Deck[]) => ({
+  type: 'DECKS/SET-DECKS' as const,
+  decks,
+})
+export const addDeckAC = (deck: Deck) => ({
+  type: 'DECKS/ADD-DECK' as const,
+  deck,
+})
 
-export const setDecksAC = (decks: DeckItems[]) => {
-  return { type: 'SET-DECKS', decks } as const
-}
+export const deleteDeckAC = (id: string) => ({
+  type: 'DECKS/DELETE-DECK' as const,
+  id,
+})
 
-export const addDeckAC = (deck: DeckItems) => {
-  return { type: 'ADD-DECK', deck } as const
-}
+export const updateDeckAC = (updatedDeck: Deck) => ({
+  type: 'DECKS/UPDATE-DECK' as const,
+  updatedDeck,
+})
