@@ -1,5 +1,7 @@
 import { Deck } from './decks-api.ts'
 
+export type RequestStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
+
 const initialState = {
   decks: [] as Deck[],
   searchParams: {
@@ -31,6 +33,7 @@ export const decksReducer = (state: DecksState = initialState, action: DecksActi
         ...state,
         decks: state.decks.map((deck) => (deck.id === action.updatedDeck.id ? action.updatedDeck : deck)),
       }
+
     default:
       return state
   }
